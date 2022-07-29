@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const EVENTS_BASE_URL = "http://localhost:8189/app/api/v1/events";
+const EVENTS_BASE_URL = "http://localhost:8189/canban_core/api/v1/events";
 
 class EventService {
 

@@ -175,3 +175,36 @@ table {
     color: #fff;
     background-color: #217669;
 }
+
+.form-group {
+    padding-bottom: 4%;
+    padding-top: 4%;
+}
+
+.form-group-top {
+    padding-top: 12%;
+    padding-bottom: 4%;
+}
+
+.form-group-bottom {
+    padding-top: 4%;
+    padding-bottom: 8%;
+}
+
+.mark {
+    padding-right: 10%;
+}
+
+.form-custom-half-right {
+    float: left;
+    width: 50%;
+    font-family: Corbel;
+}
+
+.form-custom-half-left {
+    float: left;
+    width: 50%;
+    padding-top: 20%;
+    font-family: Corbel;
+    font-size: xx-large;
+}
