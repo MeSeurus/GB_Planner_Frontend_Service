@@ -8,6 +8,7 @@ const data = [
 
 class SchedulerPage extends Component {
     render() {
+
         return (
             <div>
                 <div className='scheduler-container'>
@@ -15,6 +16,7 @@ class SchedulerPage extends Component {
                 </div>
             </div>
         );
+
     }
 }
 export default SchedulerPage;

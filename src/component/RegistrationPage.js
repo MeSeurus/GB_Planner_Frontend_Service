@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
+import Modal from "./Modal";
+import { withParams } from "../hocs";
 
 class RegistrationPage extends Component {
 
@@ -74,7 +76,7 @@ class RegistrationPage extends Component {
         };
 
         axios
-            .post('http://localhost:5555/auth/register', {
+            .post('http://localhost:5555/auth/registration', {
                 username: this.state.username,
                 password: this.state.password,
                 firstName: this.state.firstName,
@@ -82,16 +84,16 @@ class RegistrationPage extends Component {
                 confirmPassword: this.state.confirmPassword,
                 email: this.state.email
             }, { headers })
-            .then(res => {
-                // const token = res.data.token;
-                localStorage.setItem('token', res.data.token);
-                // window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
-            }
-            );
+            // .then(res => {
+            //     // const token = res.data.token;
+            //     localStorage.setItem('token', res.data.token);
+            //     // window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
+            // }
+            // )
+            ;
 
         console.log("step 2 is passed");
-        this.setState({ show: !this.state.show });
-
+        this.props.navigate("/confirmation");
     }
 
     render() {
@@ -111,17 +113,17 @@ class RegistrationPage extends Component {
                                     <div className='form-group'>
                                         <label className='mark'> Firstname </label>
                                         <input placeholder='' name='comment' className='form-control'
-                                            value={this.state.confirmPassword} onChange={this.changeFirstName} />
+                                            value={this.state.firstName} onChange={this.changeFirstName} />
                                     </div>
                                     <div className='form-group'>
                                         <label className='mark'> Lastname </label>
                                         <input placeholder='' name='price' className='form-control'
-                                            value={this.state.email} onChange={this.changeLastName} />
+                                            value={this.state.lastName} onChange={this.changeLastName} />
                                     </div>
                                     <div className='form-group'>
                                         <label className='mark'> Password </label>
                                         <input placeholder='' name='name' className='form-control'
-                                            value={this.state.username} onChange={this.changePassword} />
+                                            value={this.state.password} onChange={this.changePassword} />
                                     </div>
                                     <div className='form-group'>
                                         <label className='mark'> Confirm password </label>
@@ -133,8 +135,8 @@ class RegistrationPage extends Component {
                                         <input placeholder='' name='price' className='form-control'
                                             value={this.state.email} onChange={this.changeEmail} />
                                     </div>
-                                    <button className='btn btn-success' style={{ marginBottom: '4%' }}> Complete </button>
-                                    <button className='btn btn-danger' style={{ marginLeft: "10px" }}> Cancel </button>
+                                    <button onClick={this.handler} className='btn btn-success' style={{ marginBottom: '4%' }}> Complete </button>
+                                    <button onClick={() => this.props.navigate('/')} className='btn btn-danger' style={{ marginLeft: "10px" }}> Cancel </button>
                                 </form>
                             </div>
                         </div>
@@ -146,4 +148,4 @@ class RegistrationPage extends Component {
 
 }
 
-export default RegistrationPage;
+export default withParams(RegistrationPage);
