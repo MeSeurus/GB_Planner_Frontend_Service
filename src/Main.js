@@ -10,9 +10,11 @@ import logo_small from "./logo_small.png"
 import EventList from "./component/EventList";
 import SchedulerPage from "./component/SchedulerPage";
 import RegistrationPage from "./component/RegistrationPage";
+import ConfirmationPage from "./component/ConfirmationPage";
 import { withParams } from "./hocs";
 import axios from "axios";
 import Modal from "./component/Modal";
+import AddEvent from "./component/AddEvent";
 
 class Main extends Component {
 
@@ -78,6 +80,24 @@ class Main extends Component {
         this.setState({ password: event.target.value })
     }
 
+    getButton() {
+        if (localStorage.getItem("token") != null) {
+            return (
+                <button style={{
+                    backgroundColor: '#217669', borderColor: "#217669", color: "#8DB474",
+                    outline: "none", boxShadow: "none"
+                }} onClick={e => { localStorage.removeItem("token"); }}>Logout</button>
+            )
+        } else {
+            return (
+                <button style={{
+                    backgroundColor: '#217669', borderColor: "#217669", color: "#8DB474",
+                    outline: "none", boxShadow: "none"
+                }} onClick={e => { this.showModal(this.state.currentId); }}>Login</button>
+            )
+        }
+    }
+
     render() {
         return (
             <BrowserRouter>
@@ -94,7 +114,7 @@ class Main extends Component {
                     <ul className="header" style={{ borderRadius: '20px', marginLeft: '1%', width: '83.75%', alignItems: 'stretch' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-evenly', verticalAlign: 'middle' }}>
                             <li><NavLink exact to="/">Main Page</NavLink></li>
-                            <li><NavLink to="/stuff">All Events</NavLink></li>
+                            <li><NavLink to="/events">All Events</NavLink></li>
                             <li><NavLink to="/scheduler">Scheduler</NavLink></li>
                             <li><NavLink to="/kanban">Kanban</NavLink></li>
                             <li><NavLink to="/kanban">Chat</NavLink></li>
@@ -102,10 +122,9 @@ class Main extends Component {
                     </ul>
                     <ul className="header" style={{ borderRadius: '20px', marginLeft: '1%', width: '5%' }}>
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <button style={{
-                                backgroundColor: '#217669', borderColor: "#217669", color: "#8DB474",
-                                outline: "none", boxShadow: "none"
-                            }} onClick={e => { this.showModal(this.state.currentId); }}>Login</button>
+                            {
+                                this.getButton()
+                            }
                         </div>
                         < Modal onClose={this.showModal} show={this.state.show}>
                             <div className='modalBackground'>
@@ -124,7 +143,7 @@ class Main extends Component {
                                             <input name='name' className='form-control'
                                                 value={this.state.password} onChange={this.changePassword} />
                                         </div>
-                                        <p> Don't have an account? <NavLink to="/register">Register</NavLink></p>
+                                        <p> Don't have an account? <NavLink to="/register" onClick={this.showModal}>Register</NavLink></p>
                                     </div>
                                     <div className='modalFooter' style={{ display: "flex", placeContent: "start space-evenly" }}>
                                         <button className="btn btn-info" onClick={this.handler}> Apply </button>
@@ -139,9 +158,11 @@ class Main extends Component {
                 </div >
                 <Routes>
                     <Route exact path="/" element={<Home />} />
-                    <Route path="/stuff" element={<EventList />} />
+                    <Route path="/events" element={<EventList />} />
                     <Route path="/scheduler" element={<SchedulerPage />} />
                     <Route path="/register" element={<RegistrationPage />} />
+                    <Route path="/confirmation" element={<ConfirmationPage />} />
+                    <Route path="/events/_add" element={<AddEvent />} />
                 </Routes>
             </BrowserRouter >
         );

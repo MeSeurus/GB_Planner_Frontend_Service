@@ -6,24 +6,26 @@ const scheduler = window.scheduler;
 
 export default class Scheduler extends Component {
     componentDidMount() {
-        scheduler.skin = 'material';
-        scheduler.config.header = [
-            'day',
-            'week',
-            'month',
-            'date',
-            'prev',
-            'today',
-            'next'
-        ];
+        if (localStorage.getItem("token") != null) {
+            scheduler.skin = 'material';
+            scheduler.config.header = [
+                'day',
+                'week',
+                'month',
+                'date',
+                'prev',
+                'today',
+                'next'
+            ];
 
-        scheduler.config.hour_date = '%g:%i %A';
-        scheduler.xy.scale_width = 70;
+            scheduler.config.hour_date = '%g:%i %A';
+            scheduler.xy.scale_width = 70;
 
-        const { events } = this.props;
-        scheduler.init(this.schedulerContainer, new Date(2020, 5, 10));
-        scheduler.clearAll();
-        scheduler.parse(events);
+            const { events } = this.props;
+            scheduler.init(this.schedulerContainer, new Date(2020, 5, 10));
+            scheduler.clearAll();
+            scheduler.parse(events);
+        }
     }
     shouldComponentUpdate(nextProps) {
         return this.props.timeFormatState !== nextProps.timeFormatState;
@@ -41,11 +43,17 @@ export default class Scheduler extends Component {
     render() {
         const { timeFormatState } = this.props;
         this.setTimeFormat(timeFormatState);
-        return (
-            <div
-                ref={(input) => { this.schedulerContainer = input }}
-                style={{ width: '100%', height: '100%', backgroundColor: "FFF" }}
-            ></div>
-        );
+        if (localStorage.getItem("token") != null) {
+            return (
+                <div
+                    ref={(input) => { this.schedulerContainer = input }}
+                    style={{ width: '100%', height: '100%', backgroundColor: "FFF" }}
+                ></div>
+            );
+        } else {
+            return (
+                <div style={{ marginTop: '20%' }}> You are not authorized to view this content </div>
+            )
+        }
     }
 }
