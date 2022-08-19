@@ -11,10 +11,15 @@ import EventList from "./component/EventList";
 import SchedulerPage from "./component/SchedulerPage";
 import RegistrationPage from "./component/RegistrationPage";
 import ConfirmationPage from "./component/ConfirmationPage";
-import { withParams } from "./hocs";
+import StatisticsList from "./component/StatisticsList";
+import KanbanList from "./component/KanbanList";
 import axios from "axios";
 import Modal from "./component/Modal";
-import AddEvent from "./component/AddEvent";
+import AddEventNew from "./component/AddEventNew";
+import AccountRecovery from "./component/AccountRecovery";
+import KanbanBoard from "./component/KanbanBoard";
+import BoardItself from "./component/BoardItself";
+import AddTaskNew from "./component/AddTaskNew";
 
 class Main extends Component {
 
@@ -37,6 +42,10 @@ class Main extends Component {
         this.setState({ show: !this.state.show });
         this.setState({ currentId: id })
     };
+
+    refreshPage = () => {
+        window.location.reload();
+    }
 
     handler = () => {
 
@@ -63,10 +72,12 @@ class Main extends Component {
             .then(res => {
                 // const token = res.data.token;
                 localStorage.setItem('token', res.data.token);
+                this.refreshPage();
                 // window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
             }
             );
 
+        localStorage.setItem('username', this.state.username);
         console.log("step 2 is passed");
         this.setState({ show: !this.state.show });
 
@@ -86,7 +97,7 @@ class Main extends Component {
                 <button style={{
                     backgroundColor: '#217669', borderColor: "#217669", color: "#8DB474",
                     outline: "none", boxShadow: "none"
-                }} onClick={e => { localStorage.removeItem("token"); }}>Logout</button>
+                }} onClick={e => { localStorage.removeItem("token"); localStorage.removeItem("username"); this.refreshPage() }}>Logout</button>
             )
         } else {
             return (
@@ -111,16 +122,16 @@ class Main extends Component {
                             }} src={logo_small} alt='logo' /></li>
                         </div>
                     </ul>
-                    <ul className="header" style={{ borderRadius: '20px', marginLeft: '1%', width: '83.75%', alignItems: 'stretch' }}>
+                    <ul className="header" style={{ borderRadius: '20px', marginLeft: '1%', width: '88%', alignItems: 'stretch', left: '1%' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-evenly', verticalAlign: 'middle' }}>
                             <li><NavLink exact to="/">Main Page</NavLink></li>
                             <li><NavLink to="/events">All Events</NavLink></li>
                             <li><NavLink to="/scheduler">Scheduler</NavLink></li>
                             <li><NavLink to="/kanban">Kanban</NavLink></li>
-                            <li><NavLink to="/kanban">Chat</NavLink></li>
+                            <li><NavLink to="/statistics">Statistics</NavLink></li>
                         </div>
                     </ul>
-                    <ul className="header" style={{ borderRadius: '20px', marginLeft: '1%', width: '5%' }}>
+                    <ul className="header" style={{ borderRadius: '20px', marginLeft: '1%', width: '5%', right: '2%' }}>
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             {
                                 this.getButton()
@@ -140,10 +151,11 @@ class Main extends Component {
                                         </div>
                                         <div style={{ marginTop: '10px' }}>
                                             <label> Password </label>
-                                            <input name='name' className='form-control'
+                                            <input name='name' className='form-control' type={'password'}
                                                 value={this.state.password} onChange={this.changePassword} />
                                         </div>
                                         <p> Don't have an account? <NavLink to="/register" onClick={this.showModal}>Register</NavLink></p>
+                                        <p><NavLink to="/recovery" onClick={this.showModal}> Account recovery </NavLink></p>
                                     </div>
                                     <div className='modalFooter' style={{ display: "flex", placeContent: "start space-evenly" }}>
                                         <button className="btn btn-info" onClick={this.handler}> Apply </button>
@@ -156,13 +168,20 @@ class Main extends Component {
                         </Modal>
                     </ul>
                 </div >
+                {/* <FooterComponent /> */}
                 <Routes>
                     <Route exact path="/" element={<Home />} />
                     <Route path="/events" element={<EventList />} />
                     <Route path="/scheduler" element={<SchedulerPage />} />
                     <Route path="/register" element={<RegistrationPage />} />
                     <Route path="/confirmation" element={<ConfirmationPage />} />
-                    <Route path="/events/_add" element={<AddEvent />} />
+                    <Route path="/events/_add" element={<AddEventNew />} />
+                    <Route path="/kanban" element={<KanbanList />} />
+                    <Route path="/statistics" element={<StatisticsList />} />
+                    <Route path="/recovery" element={<AccountRecovery />} />
+                    <Route path="/kanban/:id" element={<KanbanBoard />} />
+                    <Route path="/kanban/board/:id" element={<BoardItself />} />
+                    <Route path="/kanban/:id/add" element={<AddTaskNew />} />
                 </Routes>
             </BrowserRouter >
         );

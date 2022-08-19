@@ -5,12 +5,14 @@ class Home extends Component {
     render() {
         return (
             <div>
-                <div className={"Main"} style={{backgroundColor: "#217669", width: "99.6%", height: "80vh", borderRadius: "20px"}}>
-                    <img style={{height: '100%',
-                        width: '100%', objectFit: 'contain', maxHeight: "80%", marginTop: "4%"}} src={canban} alt='logo' />
+                <div className="Main" style={{ backgroundColor: "#217669", width: "99.6%", height: "80vh", borderRadius: "20px" }}>
+                    <img style={{
+                        height: '100%',
+                        width: '100%', objectFit: 'contain', maxHeight: "80%", marginTop: "4%"
+                    }} src={canban} alt='logo' />
                 </div>
-                <div className={"description"} style={{marginTop: "20px"}}>
-                    <div style={{display: "flex", flexDirection: "column", marginLeft: "20px",  width: "46%", textAlign: "justify"}}>
+                <div className={"description"} style={{ marginTop: "20px" }}>
+                    <div style={{ display: "flex", flexDirection: "column", marginLeft: "20px", width: "46%", textAlign: "justify" }}>
                         <h2>Добро пожаловать!</h2>
                         <p> Проект представляет собой браузерное приложение,
                             позволяющее планировать свою деятельность в соответствии с календарём,

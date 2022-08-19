@@ -17,7 +17,9 @@ class RegistrationPage extends Component {
             confirmPassword: '',
             email: '',
 
-            show: true
+            show: true,
+            flag: false,
+            msg: null
 
         }
 
@@ -84,21 +86,19 @@ class RegistrationPage extends Component {
                 confirmPassword: this.state.confirmPassword,
                 email: this.state.email
             }, { headers })
-            // .then(res => {
-            //     // const token = res.data.token;
-            //     localStorage.setItem('token', res.data.token);
-            //     // window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
-            // }
-            // )
-            ;
-
+        // .then(res => {
+        //     // const token = res.data.token;
+        //     localStorage.setItem('token', res.data.token);
+        //     // window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');
+        // }
+        // )
         console.log("step 2 is passed");
         this.props.navigate("/confirmation");
     }
 
     render() {
         return (
-            <div>
+            <div style={{ marginTop: '5%' }}>
                 <div className='container'>
                     <div className='row'>
                         <div className='card col-md-6 offset-md-3 offset-md-3'>
@@ -122,12 +122,12 @@ class RegistrationPage extends Component {
                                     </div>
                                     <div className='form-group'>
                                         <label className='mark'> Password </label>
-                                        <input placeholder='' name='name' className='form-control'
+                                        <input placeholder='' name='name' className='form-control' type={'password'}
                                             value={this.state.password} onChange={this.changePassword} />
                                     </div>
                                     <div className='form-group'>
                                         <label className='mark'> Confirm password </label>
-                                        <input placeholder='' name='comment' className='form-control'
+                                        <input placeholder='' name='comment' className='form-control' type={'password'}
                                             value={this.state.confirmPassword} onChange={this.changeConfirmPassword} />
                                     </div>
                                     <div className='form-group-bottom'>
